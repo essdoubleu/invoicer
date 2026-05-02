@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>William Gordon Media — Invoice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f5f1e8;
+    --paper-edge: #ebe5d4;
+    --ink: #1a1814;
+    --ink-soft: #56504a;
+    --ink-faint: #8a8278;
+    --accent: #8b3a1f;
+    --line: #d4cdba;
+    --line-soft: #e6dfcc;
+    --shadow: 0 1px 2px rgba(26, 24, 20, 0.04), 0 8px 24px rgba(26, 24, 20, 0.06);
+    --display: 'Cormorant Garamond', Georgia, serif;
+    --body: 'Inter', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: #2a2620;
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  body {
+    padding: 40px 20px;
+    background-image:
+      radial-gradient(ellipse at top, #3a342c 0%, #2a2620 50%, #1f1c17 100%);
+  }
+
+  /* ---------- Toolbar ---------- */
+  .toolbar {
+    max-width: 8.5in;
+    margin: 0 auto 20px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .toolbar-title {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 18px;
+    color: #c9bfa7;
+    letter-spacing: 0.02em;
+  }
+
+  .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .btn {
+    background: #3a342c;
+    color: #e8e1cc;
+    border: 1px solid #4a4338;
+    padding: 8px 16px;
+    font-family: var(--body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn:hover { background: #4a4338; border-color: #5a5244; }
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #f5f1e8;
+  }
+  .btn-primary:hover { background: #a04525; border-color: #a04525; }
+  .btn-ghost {
+    background: transparent;
+    border-color: #4a4338;
+  }
+
+  /* ---------- Paper ---------- */
+  .paper {
+    background: var(--paper);
+    max-width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto;
+    padding: 0.75in 0.75in 1in;
+    box-shadow: var(--shadow);
+    position: relative;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(139, 58, 31, 0.015) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(0, 0, 0, 0.02) 0%, transparent 40%);
+  }
+
+  .paper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: var(--ink);
+  }
+
+  /* ---------- Editable fields ---------- */
+  [contenteditable] {
+    outline: none;
+    transition: background 0.15s ease;
+    border-radius: 1px;
+  }
+  [contenteditable]:hover {
+    background: rgba(139, 58, 31, 0.04);
+    box-shadow: 0 0 0 4px rgba(139, 58, 31, 0.04);
+  }
+  [contenteditable]:focus {
+    background: rgba(139, 58, 31, 0.08);
+    box-shadow: 0 0 0 4px rgba(139, 58, 31, 0.08);
+  }
+  [contenteditable]:empty::before {
+    content: attr(data-placeholder);
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  /* ---------- Header ---------- */
+  .header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: start;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 40px;
+  }
+
+  .brand-mark {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .brand-mark .ampersand {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    margin: 0 0.05em;
+  }
+
+  .brand-tagline {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .brand-meta {
+    margin-top: 18px;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+  }
+
+  .invoice-stamp {
+    text-align: right;
+  }
+  .stamp-label {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+  }
+  .stamp-word {
+    font-family: var(--display);
+    font-size: 52px;
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin-top: 4px;
+  }
+  .stamp-number {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: var(--ink-soft);
+    margin-top: 12px;
+    text-transform: uppercase;
+  }
+
+  /* ---------- Bill-to / dates strip ---------- */
+  .strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 36px;
+  }
+  .strip-block .label {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--line-soft);
+    padding-bottom: 6px;
+  }
+  .client-name {
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .client-detail {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin-top: 4px;
+  }
+  .date-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  .date-row .key { color: var(--ink-faint); }
+  .date-row .val { font-weight: 500; color: var(--ink); }
+
+  /* ---------- Line items ---------- */
+  .items-wrap { margin-bottom: 24px; }
+
+  .items-head {
+    display: grid;
+    grid-template-columns: 1fr 70px 100px 110px 30px;
+    gap: 16px;
+    padding: 10px 0;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--line);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .items-head .right { text-align: right; }
+  .items-head .center { text-align: center; }
+
+  .item-row {
+    display: grid;
+    grid-template-columns: 1fr 70px 100px 110px 30px;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: start;
+  }
+
+  .item-desc { font-size: 13px; line-height: 1.5; color: var(--ink); min-height: 20px; }
+  .item-desc-sub {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top: 2px;
+    min-height: 16px;
+  }
+  .item-qty, .item-rate, .item-amount {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .item-amount { font-weight: 500; }
+
+  .row-delete {
+    background: none;
+    border: none;
+    color: var(--ink-faint);
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 2px;
+    opacity: 0;
+    transition: all 0.15s ease;
+  }
+  .item-row:hover .row-delete { opacity: 1; }
+  .row-delete:hover { color: var(--accent); background: rgba(139, 58, 31, 0.08); }
+
+  .add-row {
+    margin-top: 16px;
+    background: none;
+    border: 1px dashed var(--line);
+    color: var(--ink-soft);
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    font-family: var(--body);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: all 0.15s ease;
+  }
+  .add-row:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    border-style: solid;
+  }
+
+  /* ---------- Totals ---------- */
+  .totals-wrap {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 40px;
+    margin-top: 32px;
+  }
+
+  .notes .label,
+  .totals .label {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+  .notes-body {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    min-height: 60px;
+  }
+
+  .totals-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .totals-line .key { color: var(--ink-soft); }
+  .totals-line .val {
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+  }
+
+  .tax-line {
+    display: grid;
+    grid-template-columns: 1fr auto 90px;
+    gap: 8px;
+    align-items: baseline;
+    padding: 8px 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .tax-line .tax-label {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dotted var(--line);
+    font-family: var(--body);
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding: 2px 0;
+    width: 100%;
+    outline: none;
+  }
+  .tax-line .tax-label:focus { border-bottom-color: var(--accent); }
+  .tax-line .tax-rate-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dotted var(--line);
+    font-family: var(--body);
+    font-size: 12px;
+    color: var(--ink-soft);
+    padding: 2px 0;
+    width: 56px;
+    text-align: right;
+    outline: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .tax-line .tax-rate-input:focus { border-bottom-color: var(--accent); }
+  .tax-line .tax-val {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    font-weight: 500;
+  }
+  .tax-remove {
+    background: none;
+    border: none;
+    color: var(--ink-faint);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 4px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .tax-line:hover .tax-remove { opacity: 1; }
+  .tax-remove:hover { color: var(--accent); }
+
+  .add-tax {
+    background: none;
+    border: none;
+    color: var(--ink-faint);
+    font-size: 10.5px;
+    cursor: pointer;
+    margin: 8px 0;
+    padding: 4px 0;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .add-tax:hover { color: var(--accent); }
+
+  .total-final {
+    margin-top: 12px;
+    padding: 16px 0 4px;
+    border-top: 2px solid var(--ink);
+    border-bottom: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .total-final .key {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .total-final .val {
+    font-family: var(--display);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  .currency-prefix { color: var(--ink-faint); margin-right: 2px; font-size: 0.75em; vertical-align: 0.15em; }
+
+  /* ---------- Footer ---------- */
+  .footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line-soft);
+    text-align: center;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+  .footer-rule {
+    width: 36px;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 auto 12px;
+  }
+
+  /* ---------- Settings Panel ---------- */
+  .settings-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 13, 10, 0.7);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .settings-overlay.open { display: flex; }
+  .settings-panel {
+    background: var(--paper);
+    padding: 36px 32px;
+    border-radius: 4px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .settings-title {
+    font-family: var(--display);
+    font-size: 26px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .settings-sub {
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+  .field input, .field textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    background: #fbf8f0;
+    border-radius: 2px;
+    font-family: var(--body);
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .field textarea { resize: vertical; min-height: 56px; font-family: var(--body); }
+  .field input:focus, .field textarea:focus { border-color: var(--accent); }
+
+  .settings-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .btn-light {
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+  }
+  .btn-light:hover { background: #2a2620; }
+  .btn-light-ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-light-ghost:hover { background: rgba(0,0,0,0.04); }
+
+  /* ---------- Print ---------- */
+  @media print {
+    body {
+      background: white;
+      padding: 0;
+    }
+    .toolbar, .add-row, .row-delete, .add-tax, .tax-remove { display: none !important; }
+    .paper {
+      box-shadow: none;
+      max-width: none;
+      min-height: auto;
+      padding: 0.5in;
+      margin: 0;
+    }
+    .paper::before { background: var(--ink) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .total-final .val { color: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .stamp-label { color: var(--accent) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    [contenteditable]:hover, [contenteditable]:focus {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    [contenteditable]:empty::before { content: ''; }
+    .item-row .item-desc-sub:empty { display: none; }
+  }
+
+  @media (max-width: 700px) {
+    body { padding: 12px; }
+    .paper { padding: 32px 24px; }
+    .header { grid-template-columns: 1fr; gap: 24px; }
+    .invoice-stamp { text-align: left; }
+    .strip { grid-template-columns: 1fr; gap: 20px; }
+    .items-head, .item-row { grid-template-columns: 1fr 50px 80px 80px 24px; gap: 8px; font-size: 11px; }
+    .totals-wrap { grid-template-columns: 1fr; }
+    .brand-mark { font-size: 30px; }
+    .stamp-word { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="toolbar-title">Invoice Composer</div>
+  <div class="toolbar-actions">
+    <button class="btn btn-ghost" onclick="openSettings()">⚙ Business Info</button>
+    <button class="btn btn-ghost" onclick="newInvoice()">+ New</button>
+    <button class="btn btn-primary" onclick="window.print()">Print / Save PDF</button>
+  </div>
+</div>
+
+<div class="paper" id="paper">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">
+      <div class="brand-mark" id="brandMark">William Gordon Media</div>
+      <div class="brand-tagline" contenteditable="true" data-key="tagline" data-placeholder="A tagline, optional">Photography & Visual Editorial</div>
+      <div class="brand-meta" id="brandMeta">
+        Add your address, email, phone in Business Info
+      </div>
+    </div>
+    <div class="invoice-stamp">
+      <div class="stamp-label">no. ​</div>
+      <div class="stamp-word">Invoice</div>
+      <div class="stamp-number" contenteditable="true" data-key="invoiceNumber">WGM-001</div>
+    </div>
+  </div>
+
+  <!-- Strip -->
+  <div class="strip">
+    <div class="strip-block">
+      <div class="label">Billed To</div>
+      <div class="client-name" contenteditable="true" data-key="clientName" data-placeholder="Client name">Client Name</div>
+      <div class="client-detail" contenteditable="true" data-key="clientCompany" data-placeholder="Company (optional)"></div>
+      <div class="client-detail" contenteditable="true" data-key="clientAddress" data-placeholder="Address line 1"></div>
+      <div class="client-detail" contenteditable="true" data-key="clientCity" data-placeholder="City, Province  Postal"></div>
+      <div class="client-detail" contenteditable="true" data-key="clientEmail" data-placeholder="Email"></div>
+    </div>
+    <div class="strip-block">
+      <div class="label">Particulars</div>
+      <div class="date-row"><span class="key">Issued</span><span class="val" contenteditable="true" data-key="issueDate"></span></div>
+      <div class="date-row"><span class="key">Due</span><span class="val" contenteditable="true" data-key="dueDate"></span></div>
+      <div class="date-row"><span class="key">Project</span><span class="val" contenteditable="true" data-key="project" data-placeholder="—"></span></div>
+    </div>
+    <div class="strip-block">
+      <div class="label">Remit To</div>
+      <div class="client-detail" id="remitInfo">
+        Add payment details in Business Info
+      </div>
+    </div>
+  </div>
+
+  <!-- Items -->
+  <div class="items-wrap">
+    <div class="items-head">
+      <div>Description</div>
+      <div class="right">Qty</div>
+      <div class="right">Rate</div>
+      <div class="right">Amount</div>
+      <div></div>
+    </div>
+    <div id="itemsBody"></div>
+    <button class="add-row" onclick="addRow()">+ Add line item</button>
+  </div>
+
+  <!-- Totals -->
+  <div class="totals-wrap">
+    <div class="notes">
+      <div class="label">Notes</div>
+      <div class="notes-body" contenteditable="true" data-key="notes" data-placeholder="Thank you, terms, payment instructions, etc.">Thank you for your business. Payment due within 30 days.</div>
+    </div>
+    <div class="totals">
+      <div class="totals-line">
+        <span class="key">Subtotal</span>
+        <span class="val"><span class="currency-prefix">CA$</span><span id="subtotal">0.00</span></span>
+      </div>
+      <div id="taxesBody"></div>
+      <button class="add-tax" onclick="addTax()">+ Add tax</button>
+      <div class="total-final">
+        <span class="key">Total Due</span>
+        <span class="val"><span class="currency-prefix">CA$</span><span id="grandTotal">0.00</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-rule"></div>
+    <div contenteditable="true" data-key="footer" data-placeholder="Closing line">Crafted with care · William Gordon Media</div>
+  </div>
+
+</div>
+
+<!-- Settings overlay -->
+<div class="settings-overlay" id="settingsOverlay">
+  <div class="settings-panel">
+    <div class="settings-title">Business Information</div>
+    <div class="settings-sub">Saved locally — set once, reused on every invoice</div>
+
+    <div class="field">
+      <label>Business Name</label>
+      <input type="text" id="biz_name" value="William Gordon Media">
+    </div>
+    <div class="field">
+      <label>Address</label>
+      <input type="text" id="biz_address" placeholder="Street address">
+    </div>
+    <div class="field">
+      <label>City / Province / Postal</label>
+      <input type="text" id="biz_city" placeholder="Toronto, ON  M5V 1A1">
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="biz_email" placeholder="hello@williamgordonmedia.com">
+    </div>
+    <div class="field">
+      <label>Phone</label>
+      <input type="text" id="biz_phone" placeholder="(555) 555-5555">
+    </div>
+    <div class="field">
+      <label>Website</label>
+      <input type="text" id="biz_web" placeholder="williamgordonmedia.com">
+    </div>
+    <div class="field">
+      <label>Payment / Remittance Details</label>
+      <textarea id="biz_remit" placeholder="e.g. e-Transfer to hello@... &#10;Cheque payable to William Gordon Media&#10;BIC / IBAN / etc."></textarea>
+    </div>
+    <div class="field">
+      <label>Business / Tax Number (optional)</label>
+      <input type="text" id="biz_tax" placeholder="GST/HST # 123456789 RT0001">
+    </div>
+
+    <div class="settings-actions">
+      <button class="btn btn-light-ghost" onclick="closeSettings()">Cancel</button>
+      <button class="btn btn-light" onclick="saveSettings()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- Storage helpers ----------
+  const LS_BIZ = 'wgm_business_v1';
+  const LS_INVOICE = 'wgm_invoice_current_v1';
+
+  const fmt = n => {
+    if (!isFinite(n)) n = 0;
+    return n.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+  const parseNum = s => {
+    if (typeof s !== 'string') s = String(s ?? '');
+    const cleaned = s.replace(/[^0-9.\-]/g, '');
+    const n = parseFloat(cleaned);
+    return isFinite(n) ? n : 0;
+  };
+
+  // ---------- Business info ----------
+  function loadBusiness() {
+    try {
+      const raw = localStorage.getItem(LS_BIZ);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function applyBusiness(biz) {
+    if (!biz) {
+      document.getElementById('brandMeta').innerHTML = '<em style="color:var(--ink-faint)">Click ⚙ Business Info to add your contact details</em>';
+      document.getElementById('remitInfo').innerHTML = '<em style="color:var(--ink-faint)">Add payment details in Business Info</em>';
+      document.getElementById('brandMark').textContent = 'William Gordon Media';
+      return;
+    }
+    document.getElementById('brandMark').textContent = biz.name || 'William Gordon Media';
+    const metaParts = [];
+    if (biz.address) metaParts.push(biz.address);
+    if (biz.city) metaParts.push(biz.city);
+    const contact = [biz.email, biz.phone, biz.web].filter(Boolean).join(' · ');
+    if (contact) metaParts.push(contact);
+    if (biz.tax) metaParts.push(biz.tax);
+    document.getElementById('brandMeta').innerHTML = metaParts.length
+      ? metaParts.map(p => p.replace(/</g,'&lt;')).join('<br>')
+      : '<em style="color:var(--ink-faint)">Click ⚙ Business Info to add details</em>';
+
+    document.getElementById('remitInfo').innerHTML = biz.remit
+      ? biz.remit.replace(/</g,'&lt;').replace(/\n/g,'<br>')
+      : '<em style="color:var(--ink-faint)">Add payment details in Business Info</em>';
+  }
+  function openSettings() {
+    const biz = loadBusiness() || {};
+    document.getElementById('biz_name').value = biz.name || 'William Gordon Media';
+    document.getElementById('biz_address').value = biz.address || '';
+    document.getElementById('biz_city').value = biz.city || '';
+    document.getElementById('biz_email').value = biz.email || '';
+    document.getElementById('biz_phone').value = biz.phone || '';
+    document.getElementById('biz_web').value = biz.web || '';
+    document.getElementById('biz_remit').value = biz.remit || '';
+    document.getElementById('biz_tax').value = biz.tax || '';
+    document.getElementById('settingsOverlay').classList.add('open');
+  }
+  function closeSettings() {
+    document.getElementById('settingsOverlay').classList.remove('open');
+  }
+  function saveSettings() {
+    const biz = {
+      name: document.getElementById('biz_name').value.trim(),
+      address: document.getElementById('biz_address').value.trim(),
+      city: document.getElementById('biz_city').value.trim(),
+      email: document.getElementById('biz_email').value.trim(),
+      phone: document.getElementById('biz_phone').value.trim(),
+      web: document.getElementById('biz_web').value.trim(),
+      remit: document.getElementById('biz_remit').value.trim(),
+      tax: document.getElementById('biz_tax').value.trim(),
+    };
+    localStorage.setItem(LS_BIZ, JSON.stringify(biz));
+    applyBusiness(biz);
+    closeSettings();
+  }
+
+  // ---------- Items ----------
+  function rowTemplate(item = {}) {
+    const div = document.createElement('div');
+    div.className = 'item-row';
+    div.innerHTML = `
+      <div>
+        <div class="item-desc" contenteditable="true" data-placeholder="Service or item">${(item.desc || '').replace(/</g,'&lt;')}</div>
+        <div class="item-desc-sub" contenteditable="true" data-placeholder="Additional detail (optional)">${(item.detail || '').replace(/</g,'&lt;')}</div>
+      </div>
+      <div class="item-qty" contenteditable="true">${item.qty != null ? item.qty : '1'}</div>
+      <div class="item-rate" contenteditable="true">${item.rate != null ? fmt(item.rate) : '0.00'}</div>
+      <div class="item-amount">0.00</div>
+      <button class="row-delete" title="Remove" onclick="removeRow(this)">×</button>
+    `;
+    return div;
+  }
+  function addRow(item) {
+    const body = document.getElementById('itemsBody');
+    body.appendChild(rowTemplate(item));
+    bindRowEvents();
+    recalc();
+  }
+  function removeRow(btn) {
+    btn.closest('.item-row').remove();
+    recalc();
+    persist();
+  }
+  function bindRowEvents() {
+    document.querySelectorAll('#itemsBody .item-row').forEach(row => {
+      if (row._bound) return;
+      row._bound = true;
+      row.querySelectorAll('[contenteditable]').forEach(el => {
+        el.addEventListener('input', () => { recalc(); persist(); });
+        el.addEventListener('blur', () => {
+          if (el.classList.contains('item-rate')) {
+            const n = parseNum(el.textContent);
+            el.textContent = fmt(n);
+          }
+          if (el.classList.contains('item-qty')) {
+            const n = parseNum(el.textContent);
+            el.textContent = n === 0 ? '0' : (Number.isInteger(n) ? String(n) : String(n));
+          }
+          recalc(); persist();
+        });
+      });
+    });
+  }
+
+  // ---------- Taxes ----------
+  function taxTemplate(tax = {}) {
+    const div = document.createElement('div');
+    div.className = 'tax-line';
+    div.innerHTML = `
+      <input class="tax-label" type="text" value="${(tax.label || 'HST').replace(/"/g,'&quot;')}" placeholder="Tax label">
+      <span style="display:flex;align-items:baseline;gap:2px;">
+        <input class="tax-rate-input" type="text" value="${tax.rate != null ? tax.rate : '13'}" placeholder="0">
+        <span style="color:var(--ink-faint);font-size:12px;">%</span>
+      </span>
+      <span class="tax-val"><span class="currency-prefix">CA$</span><span class="tax-amount">0.00</span></span>
+      <button class="tax-remove" onclick="removeTax(this)">×</button>
+    `;
+    return div;
+  }
+  function addTax(tax) {
+    const body = document.getElementById('taxesBody');
+    body.appendChild(taxTemplate(tax));
+    bindTaxEvents();
+    recalc();
+    persist();
+  }
+  function removeTax(btn) {
+    btn.closest('.tax-line').remove();
+    recalc();
+    persist();
+  }
+  function bindTaxEvents() {
+    document.querySelectorAll('#taxesBody .tax-line').forEach(t => {
+      if (t._bound) return;
+      t._bound = true;
+      t.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('input', () => { recalc(); persist(); });
+      });
+    });
+  }
+
+  // ---------- Recalc ----------
+  function recalc() {
+    let subtotal = 0;
+    document.querySelectorAll('#itemsBody .item-row').forEach(row => {
+      const qty = parseNum(row.querySelector('.item-qty').textContent);
+      const rate = parseNum(row.querySelector('.item-rate').textContent);
+      const amt = qty * rate;
+      row.querySelector('.item-amount').textContent = fmt(amt);
+      subtotal += amt;
+    });
+    document.getElementById('subtotal').textContent = fmt(subtotal);
+
+    let taxTotal = 0;
+    document.querySelectorAll('#taxesBody .tax-line').forEach(line => {
+      const rate = parseNum(line.querySelector('.tax-rate-input').value);
+      const amt = subtotal * (rate / 100);
+      line.querySelector('.tax-amount').textContent = fmt(amt);
+      taxTotal += amt;
+    });
+
+    document.getElementById('grandTotal').textContent = fmt(subtotal + taxTotal);
+  }
+
+  // ---------- Persistence of current invoice ----------
+  function gatherInvoice() {
+    const fields = {};
+    document.querySelectorAll('[data-key]').forEach(el => {
+      fields[el.dataset.key] = el.textContent.trim();
+    });
+    const items = [...document.querySelectorAll('#itemsBody .item-row')].map(row => ({
+      desc: row.querySelector('.item-desc').textContent.trim(),
+      detail: row.querySelector('.item-desc-sub').textContent.trim(),
+      qty: row.querySelector('.item-qty').textContent.trim(),
+      rate: parseNum(row.querySelector('.item-rate').textContent),
+    }));
+    const taxes = [...document.querySelectorAll('#taxesBody .tax-line')].map(line => ({
+      label: line.querySelector('.tax-label').value,
+      rate: line.querySelector('.tax-rate-input').value,
+    }));
+    return { fields, items, taxes };
+  }
+  function persist() {
+    try { localStorage.setItem(LS_INVOICE, JSON.stringify(gatherInvoice())); } catch (e) {}
+  }
+  function restore() {
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(LS_INVOICE)); } catch (e) {}
+    if (!saved) return false;
+
+    if (saved.fields) {
+      Object.entries(saved.fields).forEach(([k, v]) => {
+        const el = document.querySelector(`[data-key="${k}"]`);
+        if (el && v) el.textContent = v;
+      });
+    }
+    document.getElementById('itemsBody').innerHTML = '';
+    if (saved.items && saved.items.length) {
+      saved.items.forEach(it => addRow(it));
+    } else {
+      addRow({ desc: '', qty: 1, rate: 0 });
+    }
+    document.getElementById('taxesBody').innerHTML = '';
+    if (saved.taxes && saved.taxes.length) {
+      saved.taxes.forEach(t => addTax(t));
+    }
+    return true;
+  }
+
+  function newInvoice() {
+    if (!confirm('Start a fresh invoice? Current invoice will be cleared.')) return;
+    localStorage.removeItem(LS_INVOICE);
+    location.reload();
+  }
+
+  // ---------- Init ----------
+  function todayISO() {
+    const d = new Date();
+    return d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  function plus30() {
+    const d = new Date(); d.setDate(d.getDate() + 30);
+    return d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  function autoInvoiceNumber() {
+    const d = new Date();
+    const yy = String(d.getFullYear()).slice(2);
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    return `WGM-${yy}${mm}-001`;
+  }
+
+  function init() {
+    applyBusiness(loadBusiness());
+
+    // Bind static editable fields
+    document.querySelectorAll('[data-key]').forEach(el => {
+      el.addEventListener('input', persist);
+      el.addEventListener('blur', persist);
+    });
+
+    const restored = restore();
+    if (!restored) {
+      document.querySelector('[data-key="issueDate"]').textContent = todayISO();
+      document.querySelector('[data-key="dueDate"]').textContent = plus30();
+      document.querySelector('[data-key="invoiceNumber"]').textContent = autoInvoiceNumber();
+      addRow({ desc: 'Photo editing — package', qty: 1, rate: 0 });
+      addTax({ label: 'HST', rate: '13' });
+    }
+
+    // First-run prompt for business info
+    if (!loadBusiness()) {
+      setTimeout(() => {
+        document.getElementById('brandMeta').style.cursor = 'pointer';
+      }, 100);
+    }
+
+    // Close settings on overlay click
+    document.getElementById('settingsOverlay').addEventListener('click', e => {
+      if (e.target.id === 'settingsOverlay') closeSettings();
+    });
+  }
+
+  init();
+</script>
+
+</body>
+</html>
